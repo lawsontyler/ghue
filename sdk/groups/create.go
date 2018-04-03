@@ -21,26 +21,29 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-// CreateAPI POST on /api to create a new user
+// CreateAPI POST on /api/groups to create a new group
 func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
+
 	if err != nil {
 		log.Errorf("Error with marshalling create: %s", err.Error())
 		return &CreateResult{}, nil, err
 	}
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, "/api/", bodyRequest)
+
+	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, "/api/groups", bodyRequest)
+
 	if errHUE != nil {
-		log.Errorf("Error with requesting POST on /api (create a new group), HUE Error: %s", errHUE.Error.Description)
+		log.Errorf("Error with requesting POST on /api/groups (create a new group), HUE Error: %s", errHUE.Error.Description)
 		return &CreateResult{}, errHUE, err
 	}
 	if err != nil {
-		log.Errorf("Error with requesting POST on /api (create a new group): %s", err.Error())
+		log.Errorf("Error with requesting POST on /api/groups (create a new group): %s", err.Error())
 		return &CreateResult{}, errHUE, err
 	}
 	var creates []CreateResult
 	err = json.Unmarshal(bodyResponse, &creates)
 	if err != nil {
-		log.Errorf("Error with unmarshalling POST on /api (create a new group): %s", err.Error())
+		log.Errorf("Error with unmarshalling POST on /api/groups (create a new group): %s", err.Error())
 		return &CreateResult{}, nil, err
 	}
 	return &creates[0], nil, nil
