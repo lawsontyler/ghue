@@ -7,8 +7,8 @@ import (
 	"encoding/json"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/yesnault/ghue/sdk/common"
-	"github.com/yesnault/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/internal"
 )
 
 // Schedule struct

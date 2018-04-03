@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/yesnault/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 func initRequest(req *http.Request) {
