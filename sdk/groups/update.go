@@ -34,16 +34,19 @@ func UpdateAPI(connection *common.Connection, groupId string, update *Update) (*
 		log.Errorf("Error with requesting PUT on /api/groups/%s (update a group), HUE Error: %s", groupId, errHUE.Error.Description)
 		return &[]UpdateResult{}, errHUE, err
 	}
+
 	if err != nil {
 		log.Errorf("Error with requesting PUT on /api/groups/%s (update a group): %s", groupId, err.Error())
 		return &[]UpdateResult{}, errHUE, err
 	}
+
 	var updates []UpdateResult
 	err = json.Unmarshal(bodyResponse, &updates)
+
 	if err != nil {
 		log.Errorf("Error with unmarshalling PUT on /api/groups/%s (update a group): %s", groupId, err.Error())
 		return &[]UpdateResult{}, nil, err
 	}
-	return &updates, nil, nil
 
+	return &updates, nil, nil
 }
