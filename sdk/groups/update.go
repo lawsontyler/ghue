@@ -31,12 +31,12 @@ func UpdateAPI(connection *common.Connection, groupId string, update *Update) (*
 	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, fmt.Sprintf("/api/groups/%s", groupId), bodyRequest)
 
 	if errHUE != nil {
-		log.Errorf("Error with requesting PUT on /api/groups/%s (update a group), HUE Error: %s", groupId, errHUE.Error.Description)
+		log.Errorf("Error with requesting PUT on /api/groups/%s (delete a group), HUE Error: %s", groupId, errHUE.Error.Description)
 		return &[]UpdateResult{}, errHUE, err
 	}
 
 	if err != nil {
-		log.Errorf("Error with requesting PUT on /api/groups/%s (update a group): %s", groupId, err.Error())
+		log.Errorf("Error with requesting PUT on /api/groups/%s (delete a group): %s", groupId, err.Error())
 		return &[]UpdateResult{}, errHUE, err
 	}
 
@@ -44,7 +44,7 @@ func UpdateAPI(connection *common.Connection, groupId string, update *Update) (*
 	err = json.Unmarshal(bodyResponse, &updates)
 
 	if err != nil {
-		log.Errorf("Error with unmarshalling PUT on /api/groups/%s (update a group): %s", groupId, err.Error())
+		log.Errorf("Error with unmarshalling PUT on /api/groups/%s (delete a group): %s", groupId, err.Error())
 		return &[]UpdateResult{}, nil, err
 	}
 
