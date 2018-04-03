@@ -31,3 +31,18 @@ func GetLight(connection *common.Connection, id string) (*Light, *common.ErrorHU
 	}
 	return light, nil, nil
 }
+
+func GetLightIdByName(connection *common.Connection, name string) (string, *common.ErrorHUE, error) {
+	var lightId string
+
+	lights, _, _ := GetAllLights(connection)
+
+	for aLightId, aLight := range lights {
+		if aLight.Name == name {
+			lightId = aLightId
+			break
+		}
+	}
+
+	return lightId, nil, nil
+}

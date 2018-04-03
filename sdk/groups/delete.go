@@ -14,7 +14,7 @@ type DeleteResult struct {
 	Success string `json:"success"`
 }
 
-func deleteAPI(connection *common.Connection, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
+func DeleteAPI(connection *common.Connection, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
 	bodyResponse, errHUE, err := internal.Request(connection, "DELETE", http.StatusOK, fmt.Sprintf("/api/groups/%s", groupId), nil)
 
 	if errHUE != nil {
