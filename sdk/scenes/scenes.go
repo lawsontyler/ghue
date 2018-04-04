@@ -11,6 +11,17 @@ import (
 	"github.com/lawsontyler/ghue/sdk/internal"
 )
 
+type LightState struct {
+	On bool `json:"on"`
+	Bri string `json:"bri,omitempty"`
+	Hue string `json:"hue,omitempty"`
+	Sat string `json:"sat,omitempty"`
+	XY []float64 `json:"xy,omitempty"`
+	CT string `json:"ct,omitempty"`
+	Effect string `json:"effect,omitempty"`
+	TransitionTime int `json:"transitiontime,omitempty"`
+}
+
 // Scene struct
 type Scene struct {
 	Appdata     struct{}    `json:"appdata"`
@@ -22,13 +33,7 @@ type Scene struct {
 	Picture     string      `json:"picture"`
 	Recycle     bool        `json:"recycle"`
 	Version     int         `json:"version"`
-	Lightstates struct {
-		One struct {
-			Bri int       `json:"bri"`
-			On  bool      `json:"on"`
-			Xy  []float64 `json:"xy"`
-		} `json:"1"`
-	} `json:"lightstates,omitempty"`
+	Lightstates map[string]LightState `json:"lightstates,omitempty"`
 }
 
 // GetAllScenes GET on /api/<username>/scenes
