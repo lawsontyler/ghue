@@ -32,7 +32,7 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-func createAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	if err != nil {
