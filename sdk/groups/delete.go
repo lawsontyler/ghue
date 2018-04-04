@@ -19,6 +19,8 @@ func DeleteAPI(connection *common.Connection, groupId string) (*[]DeleteResult, 
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting DELETE on /api/groups/%s (delete a group), HUE Error: %s", groupId, errHUE.Error.Description)
+		err := fmt.Errorf("error with requesting DELETE on /api/groups/%s (delete a group), HUE Error: %s", groupId, errHUE.Error.Description)
+
 		return &[]DeleteResult{}, errHUE, err
 	}
 
