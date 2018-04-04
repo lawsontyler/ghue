@@ -7,8 +7,8 @@ import (
 	"encoding/json"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/yesnault/ghue/sdk/common"
-	"github.com/yesnault/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/internal"
 )
 
 // GetSensor GET on /api/<username>/sensors/<id>
@@ -30,4 +30,19 @@ func GetSensor(connection *common.Connection, id string) (*Sensor, *common.Error
 		return sensor, nil, err
 	}
 	return sensor, nil, nil
+}
+
+func GetSensorIdByName(connection *common.Connection, name string) (string, *common.ErrorHUE, error) {
+	var sensorId string
+
+	sensors, _, _ := GetAllSensors(connection)
+
+	for aSensorId, aSensor := range sensors {
+		if aSensor.Name == name {
+			sensorId = aSensorId
+			break
+		}
+	}
+
+	return sensorId, nil, nil
 }
