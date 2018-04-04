@@ -14,10 +14,11 @@ import (
 // GetSensor GET on /api/<username>/sensors/<id>
 func GetSensor(connection *common.Connection, id string) (*Sensor, *common.ErrorHUE, error) {
 	sensor := &Sensor{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/sensors/" + id)
+	path := fmt.Sprintf("/api/%s/sensors/%s", connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return sensor, errHUE, err
 	}
 	if err != nil {
@@ -39,8 +40,7 @@ func GetSensorIdByName(connection *common.Connection, name string) (string, *com
 
 	for aSensorId, aSensor := range sensors {
 		if aSensor.Name == name {
-			sensorId = aSensorId
-			break
+			return aSensorId, nil, nil
 		}
 	}
 

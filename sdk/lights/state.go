@@ -91,12 +91,16 @@ func SetState(connection *common.Connection, id string, setState *SetStateValues
 		return ret, nil, err
 	}
 
-	path := fmt.Sprintf("/api/" + connection.Username + "/lights/" + id + "/state")
+	path := fmt.Sprintf("/api/%s/lights/%s/state", connection.Username, id)
+
 	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, path, bodyRequest)
+
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return ret, errHUE, err
 	}
+
 	if err != nil {
 		log.Errorf("Error: %s", err.Error())
 		return ret, errHUE, err

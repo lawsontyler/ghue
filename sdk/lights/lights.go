@@ -26,7 +26,7 @@ type Light struct {
 // GetAllLights GET on /api/<username>/lights
 func GetAllLights(connection *common.Connection) (map[string]*Light, *common.ErrorHUE, error) {
 	lights := map[string]*Light{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/lights")
+	path := fmt.Sprintf("/api/%s/lights", connection.Username)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

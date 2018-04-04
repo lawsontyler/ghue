@@ -14,10 +14,11 @@ import (
 // GetSchedule GET on /api/<username>/schedules/<id>
 func GetSchedule(connection *common.Connection, id string) (*Schedule, *common.ErrorHUE, error) {
 	schedule := &Schedule{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/schedules/" + id)
+	path := fmt.Sprintf("/api/%s/schedules/%s", connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return schedule, errHUE, err
 	}
 	if err != nil {

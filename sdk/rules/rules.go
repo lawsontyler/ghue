@@ -37,20 +37,27 @@ type Rule struct {
 // GetAllRules GET on /api/<username>/rules
 func GetAllRules(connection *common.Connection) (map[string]*Rule, *common.ErrorHUE, error) {
 	rules := map[string]*Rule{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/rules")
+	path := fmt.Sprintf("/api/%s/rules", connection.Username)
+
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return rules, errHUE, err
 	}
+
 	if err != nil {
 		log.Errorf("Error: %s", err.Error())
 		return rules, errHUE, err
 	}
+
 	err = json.Unmarshal(bodyResponse, &rules)
+
 	if err != nil {
 		log.Errorf("Error with unmarshalling GetAllRules: %s", err.Error())
 		return rules, nil, err
 	}
+
 	return rules, nil, nil
 }

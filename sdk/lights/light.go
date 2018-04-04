@@ -14,7 +14,7 @@ import (
 // GetLight GET on /api/<username>/lights/<id>
 func GetLight(connection *common.Connection, id string) (*Light, *common.ErrorHUE, error) {
 	light := &Light{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/lights/" + id)
+	path := fmt.Sprintf("/api/%s/lights/%s", connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

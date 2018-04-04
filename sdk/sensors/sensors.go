@@ -34,12 +34,13 @@ type Sensor struct {
 // GetAllSensors GET on /api/<username>/sensors
 func GetAllSensors(connection *common.Connection) (map[string]*Sensor, *common.ErrorHUE, error) {
 	sensors := map[string]*Sensor{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/sensors")
+	path := fmt.Sprintf("/api/%s/sensors", connection.Username)
 
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return sensors, errHUE, err
 	}
 

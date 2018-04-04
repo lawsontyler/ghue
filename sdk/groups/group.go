@@ -14,7 +14,7 @@ import (
 // GetGroup GET on /api/<username>/groups/<id>
 func GetGroup(connection *common.Connection, id string) (*Group, *common.ErrorHUE, error) {
 	group := &Group{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/groups/" + id)
+	path := fmt.Sprintf("/api/%s/groups/%s", connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

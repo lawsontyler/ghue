@@ -28,7 +28,7 @@ func UpdateAPI(connection *common.Connection, groupId string, update *Update) (*
 		return &[]UpdateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, fmt.Sprintf("/api/groups/%s", groupId), bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, fmt.Sprintf("/api/%s/groups/%s", connection.Username, groupId), bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting PUT on /api/groups/%s (delete a group), HUE Error: %s", groupId, errHUE.Error.Description)

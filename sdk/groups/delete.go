@@ -15,7 +15,7 @@ type DeleteResult struct {
 }
 
 func DeleteAPI(connection *common.Connection, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
-	bodyResponse, errHUE, err := internal.Request(connection, "DELETE", http.StatusOK, fmt.Sprintf("/api/groups/%s", groupId), nil)
+	bodyResponse, errHUE, err := internal.Request(connection, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/groups/%s", connection.Username, groupId), nil)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting DELETE on /api/groups/%s (update a group), HUE Error: %s", groupId, errHUE.Error.Description)

@@ -6,6 +6,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/internal"
 	"net/http"
+	"fmt"
 )
 
 type Create struct {
@@ -16,7 +17,7 @@ type Create struct {
 
 type CreateResult struct {
 	Success struct {
-		Id int `json:"id"`
+		Id string `json:"id"`
 	} `json:"success"`
 }
 
@@ -28,10 +29,11 @@ func CreateApi(connection *common.Connection, create *Create) (*CreateResult, *c
 		return &CreateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, "/api/scenes", bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, fmt.Sprintf("/api/%s/scenes", connection.Username), bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting POST on /api/scenes (create a new scene), HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("error with requesting POST on /api/scenes (create a new scene), HUE Error: %s", errHUE.Error.Description)
 		return &CreateResult{}, errHUE, err
 	}
 

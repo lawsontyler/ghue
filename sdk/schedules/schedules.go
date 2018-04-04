@@ -32,10 +32,11 @@ type Schedule struct {
 // GetAllSchedules GET on /api/<username>/schedules
 func GetAllSchedules(connection *common.Connection) (map[string]*Schedule, *common.ErrorHUE, error) {
 	schedules := map[string]*Schedule{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/schedules")
+	path := fmt.Sprintf("/api/%s/schedules", connection.Username)
 	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
+		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return schedules, errHUE, err
 	}
 	if err != nil {
