@@ -16,7 +16,7 @@ type LightState struct {
 	Bri string `json:"bri,omitempty"`
 	Hue string `json:"hue,omitempty"`
 	Sat string `json:"sat,omitempty"`
-	XY []float64 `json:"xy,omitempty"`
+	XY *[2]float64 `json:"xy,omitempty"`
 	CT string `json:"ct,omitempty"`
 	Effect string `json:"effect,omitempty"`
 	TransitionTime int `json:"transitiontime,omitempty"`
