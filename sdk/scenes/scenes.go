@@ -13,11 +13,11 @@ import (
 
 type LightState struct {
 	On bool `json:"on"`
-	Bri string `json:"bri,omitempty"`
-	Hue string `json:"hue,omitempty"`
-	Sat string `json:"sat,omitempty"`
+	Bri int `json:"bri,omitempty"`
+	Hue int `json:"hue,omitempty"`
+	Sat int `json:"sat,omitempty"`
 	XY *[2]float64 `json:"xy,omitempty"`
-	CT string `json:"ct,omitempty"`
+	CT int `json:"ct,omitempty"`
 	Effect string `json:"effect,omitempty"`
 	TransitionTime int `json:"transitiontime,omitempty"`
 }

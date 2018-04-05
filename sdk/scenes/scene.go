@@ -33,6 +33,7 @@ func GetScene(connection *common.Connection, id string) (*Scene, *common.ErrorHU
 
 	if err != nil {
 		log.Errorf("Error with unmarshalling GetScene: %s", err.Error())
+		log.Errorf("JSON was: %s", bodyResponse)
 		return scene, nil, err
 	}
 
