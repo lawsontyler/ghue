@@ -18,7 +18,7 @@ type Create struct {
 // CreateResult struct
 type CreateResult struct {
 	Success struct {
-		Id int `json:"id"`
+		Id string `json:"id"`
 	} `json:"success"`
 }
 
@@ -32,6 +32,8 @@ func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *c
 	}
 
 	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, fmt.Sprintf("/api/%s/groups", connection.Username), bodyRequest)
+
+	log.Errorf("Response was: %s", bodyResponse)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting POST on /api/groups (create a new group), HUE Error: %s", errHUE.Error.Description)
