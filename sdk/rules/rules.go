@@ -11,21 +11,40 @@ import (
 	"github.com/lawsontyler/ghue/sdk/internal"
 )
 
+type Condition struct {
+	Address string `json:"address"`
+	Operator string `json:"operator"`
+	Value *string `json:"value,omitempty"`
+}
+
+type ActionBody struct {
+	On *bool `json:"on"`
+	Bri *int `json:"bri,omitempty"`
+	Hue *int `json:"hue,omitempty"`
+	Sat *int `json:"sat,omitempty"`
+	XY *[2]float64 `json:"xy,omitempty"`
+	CT *int `json:"ct,omitempty"`
+	Alert *string `json:"alert,omitempty"`
+	Effect *string `json:"effect,omitempty"`
+	TransitionTime *int `json:"transitiontime,omitempty"`
+	BriInc *int `json:"bri_inc,omitempty"`
+	HueInc *int `json:"hue_inc,omitempty"`
+	SatInc *int `json:"sat_inc,omitempty"`
+	CTInc *int `json:"ct_inc,omitempty"`
+	XYInc *float64 `json:"xy_inc,omitempty"`
+	Scene *string `json:"scene,omitempty"`
+}
+
+type Action struct {
+	Address string `json:"address"`
+	Method string `json:"method"`
+	Body ActionBody `json:"body"`
+}
+
 // Rule struct
 type Rule struct {
-	Actions []struct {
-		Address string `json:"address"`
-		Body    struct {
-			BriInc         int `json:"bri_inc"`
-			Transitiontime int `json:"transitiontime"`
-		} `json:"body"`
-		Method string `json:"method"`
-	} `json:"actions"`
-	Conditions []struct {
-		Address  string `json:"address"`
-		Operator string `json:"operator"`
-		Value    string `json:"value"`
-	} `json:"conditions"`
+	Actions []Action `json:"actions"`
+	Conditions []Condition `json:"conditions"`
 	Created        string `json:"created"`
 	Lasttriggered  string `json:"lasttriggered"`
 	Name           string `json:"name"`

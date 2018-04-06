@@ -9,17 +9,6 @@ import (
 	"fmt"
 )
 
-type Condition struct {
-	Address string `json:"address"`
-	Operator string `json:"operator"`
-	Value string `json:"value,omitempty"`
-}
-
-type Action struct {
-	Address string `json:"address"`
-	Method string `json:"method"`
-	Body map[string]interface{} `json:"body"`
-}
 
 type Create struct {
 	Name string `json:"name"`
@@ -35,6 +24,8 @@ type CreateResult struct {
 
 func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
+
+	log.Errorf("JSON: %s", bodyRequest)
 
 	if err != nil {
 		log.Errorf("Error with marshalling create rule: %s", err.Error())
