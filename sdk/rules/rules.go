@@ -18,7 +18,7 @@ type Condition struct {
 }
 
 type ActionBody struct {
-	On *bool `json:"on"`
+	On *bool `json:"on,omitempty"`
 	Bri *int `json:"bri,omitempty"`
 	Hue *int `json:"hue,omitempty"`
 	Sat *int `json:"sat,omitempty"`

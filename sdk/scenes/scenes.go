@@ -12,14 +12,14 @@ import (
 )
 
 type LightState struct {
-	On bool `json:"on"`
-	Bri int `json:"bri,omitempty"`
-	Hue int `json:"hue,omitempty"`
-	Sat int `json:"sat,omitempty"`
+	On *bool `json:"on,omitempty"`
+	Bri *int `json:"bri,omitempty"`
+	Hue *int `json:"hue,omitempty"`
+	Sat *int `json:"sat,omitempty"`
 	XY *[2]float64 `json:"xy,omitempty"`
-	CT int `json:"ct,omitempty"`
-	Effect string `json:"effect,omitempty"`
-	TransitionTime int `json:"transitiontime,omitempty"`
+	CT *int `json:"ct,omitempty"`
+	Effect *string `json:"effect,omitempty"`
+	TransitionTime *int `json:"transitiontime,omitempty"`
 }
 
 // Scene struct
