@@ -10,7 +10,7 @@ import (
 )
 
 type DeleteResult struct {
-	Success map[string]interface{} `json:"success"`
+	Success string `json:"success"`
 }
 
 func DeleteAPI(connection *common.Connection, ruleId string) (*[]DeleteResult, *common.ErrorHUE, error) {
