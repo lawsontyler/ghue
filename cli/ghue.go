@@ -5,17 +5,17 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/config"
-	"github.com/yesnault/ghue/cli/groups"
-	"github.com/yesnault/ghue/cli/info"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/cli/lights"
-	"github.com/yesnault/ghue/cli/rules"
-	"github.com/yesnault/ghue/cli/scenes"
-	"github.com/yesnault/ghue/cli/schedules"
-	"github.com/yesnault/ghue/cli/sensors"
-	"github.com/yesnault/ghue/cli/update"
-	"github.com/yesnault/ghue/cli/version"
+	"github.com/lawsontyler/ghue/cli/config"
+	"github.com/lawsontyler/ghue/cli/groups"
+	"github.com/lawsontyler/ghue/cli/info"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/cli/lights"
+	"github.com/lawsontyler/ghue/cli/rules"
+	"github.com/lawsontyler/ghue/cli/scenes"
+	"github.com/lawsontyler/ghue/cli/schedules"
+	"github.com/lawsontyler/ghue/cli/sensors"
+	"github.com/lawsontyler/ghue/cli/update"
+	"github.com/lawsontyler/ghue/cli/version"
 )
 
 var rootCmd = &cobra.Command{

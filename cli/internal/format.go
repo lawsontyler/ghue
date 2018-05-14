@@ -9,7 +9,7 @@ import (
 	"github.com/ghodss/yaml"
 )
 
-// FormatOutput autmatically formats json based output based on user choice.
+// FormatOutput automatically formats json based output based on user choice.
 // when selected formatter is "pretty", call prettyFormatter callback.
 func FormatOutput(data []byte, prettyFormatter func([]byte)) {
 	switch Format {

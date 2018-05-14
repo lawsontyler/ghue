@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 // Cmd version

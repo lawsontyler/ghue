@@ -8,12 +8,12 @@ import (
 	"github.com/google/go-github/github"
 	"github.com/inconshreveable/go-update"
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/cli/internal"
 )
 
 // used by CI to inject architecture (linux-amd64, etc...) at build time
 var architecture string
-var urlGitubReleases = "https://github.com/yesnault/ghue/releases"
+var urlGitubReleases = "https://github.com/lawsontyler/ghue/releases"
 
 // Cmd update
 var Cmd = &cobra.Command{
@@ -43,7 +43,7 @@ func getURLArtifactFromGithub(architecture string) string {
 	}
 
 	internal.Exit("Invalid Artifacts on latest release. Please try again in few minutes.\n")
-	internal.Exit("If the problem persists, please open an issue on https://github.com/yesnault/ghue/issues\n")
+	internal.Exit("If the problem persists, please open an issue on https://github.com/lawsontyler/ghue/issues\n")
 	os.Exit(1)
 	return ""
 }

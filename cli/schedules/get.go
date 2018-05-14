@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/config"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/sdk/schedules"
+	"github.com/lawsontyler/ghue/cli/config"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/sdk/schedules"
 )
 
 var cmdSchedulesGet = &cobra.Command{

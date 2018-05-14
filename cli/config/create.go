@@ -8,9 +8,9 @@ import (
 	"path"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/sdk/common"
-	"github.com/yesnault/ghue/sdk/config"
+	"../internal"
+	"../../sdk/common"
+	"../../sdk/config"
 )
 
 var (

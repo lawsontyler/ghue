@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/config"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/sdk/rules"
+	"github.com/lawsontyler/ghue/cli/config"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/sdk/rules"
 )
 
 var cmdRulesAll = &cobra.Command{

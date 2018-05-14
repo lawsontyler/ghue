@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 func init() {

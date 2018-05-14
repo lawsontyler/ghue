@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/yesnault/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 // Exit func display an error message on stderr and exit 1

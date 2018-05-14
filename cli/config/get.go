@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 
 	"github.com/spf13/cobra"
-	"github.com/yesnault/ghue/cli/internal"
-	"github.com/yesnault/ghue/sdk/config"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/sdk/config"
 )
 
 var cmdConfigGet = &cobra.Command{
