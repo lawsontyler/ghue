@@ -8,6 +8,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // Create represents body struct of http://www.developers.meethue.com/documentation/configuration-api#71_create_user
@@ -25,13 +26,13 @@ type CreateResult struct {
 }
 
 // CreateAPI POST on /api to create a new user
-func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 	if err != nil {
 		log.Errorf("Error with marshalling create: %s", err.Error())
 		return &CreateResult{}, nil, err
 	}
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, "/api/", bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "POST", http.StatusOK, "/api/", bodyRequest)
 	if errHUE != nil {
 		log.Errorf("Error with requesting POST on /api (create a new user), HUE Error: %s", errHUE.Error.Description)
 		return &CreateResult{}, errHUE, err

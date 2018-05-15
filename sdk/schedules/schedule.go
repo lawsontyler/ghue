@@ -9,13 +9,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetSchedule GET on /api/<username>/schedules/<id>
-func GetSchedule(connection *common.Connection, id string) (*Schedule, *common.ErrorHUE, error) {
+func GetSchedule(client *factory.SdkClient, id string) (*Schedule, *common.ErrorHUE, error) {
 	schedule := &Schedule{}
-	path := fmt.Sprintf("/api/%s/schedules/%s", connection.Username, id)
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/%s/schedules/%s", client.Connection.Username, id)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)

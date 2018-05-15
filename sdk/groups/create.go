@@ -7,6 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/common"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type Create struct {
@@ -23,7 +24,7 @@ type CreateResult struct {
 }
 
 // CreateAPI POST on /api/groups to create a new group
-func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	if err != nil {
@@ -31,7 +32,7 @@ func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *c
 		return &CreateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, fmt.Sprintf("/api/%s/groups", connection.Username), bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "POST", http.StatusOK, fmt.Sprintf("/api/%s/groups", client.Connection.Username), bodyRequest)
 
 	log.Errorf("Response was: %s", bodyResponse)
 

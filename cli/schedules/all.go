@@ -8,6 +8,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/schedules"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdSchedulesAll = &cobra.Command{
@@ -20,7 +21,8 @@ var cmdSchedulesAll = &cobra.Command{
 }
 
 func allCmd(connection *common.Connection) {
-	result, errHUE, err := schedules.GetAllSchedules(connection)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := schedules.GetAllSchedules(client)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

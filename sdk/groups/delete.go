@@ -8,14 +8,15 @@ import (
 	log "github.com/Sirupsen/logrus"
 
 	"encoding/json"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type DeleteResult struct {
 	Success string `json:"success"`
 }
 
-func DeleteAPI(connection *common.Connection, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
-	bodyResponse, errHUE, err := internal.Request(connection, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/groups/%s", connection.Username, groupId), nil)
+func DeleteAPI(client *factory.SdkClient, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
+	bodyResponse, errHUE, err := internal.Request(client, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/groups/%s", client.Connection.Username, groupId), nil)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting DELETE on /api/groups/%s (delete a group), HUE Error: %s", groupId, errHUE.Error.Description)

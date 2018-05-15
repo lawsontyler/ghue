@@ -9,6 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type Condition struct {
@@ -54,11 +55,11 @@ type Rule struct {
 }
 
 // GetAllRules GET on /api/<username>/rules
-func GetAllRules(connection *common.Connection) (map[string]*Rule, *common.ErrorHUE, error) {
+func GetAllRules(client *factory.SdkClient) (map[string]*Rule, *common.ErrorHUE, error) {
 	rules := map[string]*Rule{}
-	path := fmt.Sprintf("/api/%s/rules", connection.Username)
+	path := fmt.Sprintf("/api/%s/rules", client.Connection.Username)
 
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

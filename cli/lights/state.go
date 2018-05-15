@@ -10,6 +10,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/lights"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // TODO Add All arguments from http://www.developers.meethue.com/documentation/lights-api#15_set_light_attributes_rename
@@ -106,7 +107,8 @@ func stateCmd(connection *common.Connection, id string) {
 		CtInc:          ctInc,
 		XYInc:          xyInc,
 	}
-	result, errHUE, err := lights.SetState(connection, id, setState)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := lights.SetState(client, id, setState)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

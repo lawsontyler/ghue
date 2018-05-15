@@ -9,13 +9,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetSensor GET on /api/<username>/sensors/<id>
-func GetSensor(connection *common.Connection, id string) (*Sensor, *common.ErrorHUE, error) {
+func GetSensor(client *factory.SdkClient, id string) (*Sensor, *common.ErrorHUE, error) {
 	sensor := &Sensor{}
-	path := fmt.Sprintf("/api/%s/sensors/%s", connection.Username, id)
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/%s/sensors/%s", client.Connection.Username, id)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		err := fmt.Errorf("HUE Error: %s", errHUE.Error.Description)
@@ -33,10 +34,10 @@ func GetSensor(connection *common.Connection, id string) (*Sensor, *common.Error
 	return sensor, nil, nil
 }
 
-func GetSensorIdByName(connection *common.Connection, name string) (string, *common.ErrorHUE, error) {
+func GetSensorIdByName(client *factory.SdkClient, name string) (string, *common.ErrorHUE, error) {
 	var sensorId string
 
-	sensors, _, _ := GetAllSensors(connection)
+	sensors, _, _ := GetAllSensors(client)
 
 	for aSensorId, aSensor := range sensors {
 		if aSensor.Name == name {

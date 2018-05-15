@@ -9,14 +9,15 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetRule GET on /api/<username>/rules/<id>
-func GetRule(connection *common.Connection, id string) (*Rule, *common.ErrorHUE, error) {
+func GetRule(client *factory.SdkClient, id string) (*Rule, *common.ErrorHUE, error) {
 	rule := &Rule{}
-	path := fmt.Sprintf("/api/%s/rules/%s", connection.Username, id)
+	path := fmt.Sprintf("/api/%s/rules/%s", client.Connection.Username, id)
 
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

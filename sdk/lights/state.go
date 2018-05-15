@@ -11,6 +11,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // State of a light
@@ -46,7 +47,7 @@ type SetStateValues struct {
 }
 
 // SetState PUT on /api/<username>/lights/<idLight>
-func SetState(connection *common.Connection, id string, setState *SetStateValues) ([]interface{}, *common.ErrorHUE, error) {
+func SetState(client *factory.SdkClient, id string, setState *SetStateValues) ([]interface{}, *common.ErrorHUE, error) {
 
 	var ret []interface{}
 	requestBody := make(map[string]interface{})
@@ -91,9 +92,9 @@ func SetState(connection *common.Connection, id string, setState *SetStateValues
 		return ret, nil, err
 	}
 
-	path := fmt.Sprintf("/api/%s/lights/%s/state", connection.Username, id)
+	path := fmt.Sprintf("/api/%s/lights/%s/state", client.Connection.Username, id)
 
-	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, path, bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "PUT", http.StatusOK, path, bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

@@ -9,6 +9,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/groups"
 	"strconv"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var (
@@ -40,6 +41,8 @@ func createGroupCmd(connection *common.Connection) {
 	// I'm intentionally getting this as ints off the command line
 	// I figure, why not let Cobra take care of the validation?  Converting it to strings is easy.
 
+	client := factory.GetSdkClient(connection)
+
 	var lightStrings []string
 
 	for _, element := range lights {
@@ -57,7 +60,7 @@ func createGroupCmd(connection *common.Connection) {
 		group.Type = groupType
 	}
 
-	result, errHUE, err := groups.CreateAPI(connection, &group)
+	result, errHUE, err := groups.CreateAPI(client, &group)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

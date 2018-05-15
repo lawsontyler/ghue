@@ -7,14 +7,15 @@ import (
 	"fmt"
 	"encoding/json"
 	log "github.com/Sirupsen/logrus"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type DeleteResult struct {
 	Success string `json:"success"`
 }
 
-func DeleteAPI(connection *common.Connection, sceneId string) (*[]DeleteResult, *common.ErrorHUE, error) {
-	bodyResponse, errHUE, err := internal.Request(connection, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/scenes/%s", connection.Username, sceneId), nil)
+func DeleteAPI(client *factory.SdkClient, sceneId string) (*[]DeleteResult, *common.ErrorHUE, error) {
+	bodyResponse, errHUE, err := internal.Request(client, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/scenes/%s", client.Connection.Username, sceneId), nil)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting DELETE on /api/scenes/%s (delete a scene), HUE Error: %s", sceneId, errHUE.Error.Description)

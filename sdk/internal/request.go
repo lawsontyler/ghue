@@ -9,6 +9,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 func initRequest(req *http.Request) {
@@ -22,11 +23,11 @@ func getHTTPClient() *http.Client {
 
 // Request executes a request of method (POST, PUT, DELETE) on path, checks
 // if return HTTP Code is equals to wantCode
-func Request(connection *common.Connection, method string, wantCode int, path string, jsonStr []byte) ([]byte, *common.ErrorHUE, error) {
+func Request(client *factory.SdkClient, method string, wantCode int, path string, jsonStr []byte) ([]byte, *common.ErrorHUE, error) {
 
 	var req *http.Request
 
-	fullURL := fmt.Sprintf("http://%s%s", connection.Host, path)
+	fullURL := fmt.Sprintf("http://%s%s", client.Connection.Host, path)
 	if jsonStr != nil {
 		req, _ = http.NewRequest(method, fullURL, bytes.NewReader(jsonStr))
 	} else {
@@ -48,7 +49,7 @@ func Request(connection *common.Connection, method string, wantCode int, path st
 		inError = true
 	}
 
-	if resp.StatusCode != wantCode || connection.Verbose || inError {
+	if resp.StatusCode != wantCode || client.Connection.Verbose || inError {
 		//log.Errorf("Response Status: %s and we want %d", resp.Status, wantCode)
 		log.Errorf("In HUE Error:%t", inError)
 		log.Errorf("HUE Error:%+v", errors)

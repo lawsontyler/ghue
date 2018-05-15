@@ -9,6 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // Light struct
@@ -24,10 +25,10 @@ type Light struct {
 }
 
 // GetAllLights GET on /api/<username>/lights
-func GetAllLights(connection *common.Connection) (map[string]*Light, *common.ErrorHUE, error) {
+func GetAllLights(client *factory.SdkClient) (map[string]*Light, *common.ErrorHUE, error) {
 	lights := map[string]*Light{}
-	path := fmt.Sprintf("/api/%s/lights", connection.Username)
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/%s/lights", client.Connection.Username)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return lights, errHUE, err

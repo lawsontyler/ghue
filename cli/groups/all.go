@@ -8,6 +8,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/groups"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdGroupsAll = &cobra.Command{
@@ -20,7 +21,8 @@ var cmdGroupsAll = &cobra.Command{
 }
 
 func allCmd(connection *common.Connection) {
-	result, errHUE, err := groups.GetAllGroups(connection)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := groups.GetAllGroups(client)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

@@ -9,13 +9,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetLight GET on /api/<username>/lights/<id>
-func GetLight(connection *common.Connection, id string) (*Light, *common.ErrorHUE, error) {
+func GetLight(client *factory.SdkClient, id string) (*Light, *common.ErrorHUE, error) {
 	light := &Light{}
-	path := fmt.Sprintf("/api/%s/lights/%s", connection.Username, id)
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/%s/lights/%s", client.Connection.Username, id)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return light, errHUE, err
@@ -32,10 +33,10 @@ func GetLight(connection *common.Connection, id string) (*Light, *common.ErrorHU
 	return light, nil, nil
 }
 
-func GetLightIdByName(connection *common.Connection, name string) (string, *common.ErrorHUE, error) {
+func GetLightIdByName(client *factory.SdkClient, name string) (string, *common.ErrorHUE, error) {
 	var lightId string
 
-	lights, _, _ := GetAllLights(connection)
+	lights, _, _ := GetAllLights(client)
 
 	for aLightId, aLight := range lights {
 		if aLight.Name == name {

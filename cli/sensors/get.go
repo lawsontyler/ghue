@@ -10,6 +10,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/sensors"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdSensorsGet = &cobra.Command{
@@ -27,7 +28,8 @@ var cmdSensorsGet = &cobra.Command{
 }
 
 func getCmd(connection *common.Connection, id string) {
-	result, errHUE, err := sensors.GetSensor(connection, id)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := sensors.GetSensor(client, id)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

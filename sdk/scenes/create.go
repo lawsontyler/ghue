@@ -7,6 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/internal"
 	"net/http"
 	"fmt"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type Create struct {
@@ -21,7 +22,7 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-func CreateApi(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateApi(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	if err != nil {
@@ -29,7 +30,7 @@ func CreateApi(connection *common.Connection, create *Create) (*CreateResult, *c
 		return &CreateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, fmt.Sprintf("/api/%s/scenes", connection.Username), bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "POST", http.StatusOK, fmt.Sprintf("/api/%s/scenes", client.Connection.Username), bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting POST on /api/scenes (create a new scene), HUE Error: %s", errHUE.Error.Description)

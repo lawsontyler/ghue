@@ -11,6 +11,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/config"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var (
@@ -35,20 +36,22 @@ var cmdConfigRegister = &cobra.Command{
 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		createCmd()
+		connection := &common.Connection{
+			Host:    ip,
+			Verbose: internal.Verbose,
+		}
+		createCmd(connection)
 	},
 }
 
-func createCmd() {
-	connection := &common.Connection{
-		Host:    ip,
-		Verbose: internal.Verbose,
-	}
+func createCmd(connection *common.Connection) {
+	client := factory.GetSdkClient(connection)
+
 	create := &config.Create{
 		DeviceType: "ghue" + common.VERSION,
 	}
 
-	createResult, errHUE, err := config.CreateAPI(connection, create)
+	createResult, errHUE, err := config.CreateAPI(client, create)
 	internal.CheckErrors(err, errHUE)
 
 	output, err := json.Marshal(createResult)

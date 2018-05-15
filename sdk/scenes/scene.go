@@ -9,14 +9,15 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetScene GET on /api/<username>/scenes/<id>
-func GetScene(connection *common.Connection, id string) (*Scene, *common.ErrorHUE, error) {
+func GetScene(client *factory.SdkClient, id string) (*Scene, *common.ErrorHUE, error) {
 	scene := &Scene{}
-	path := fmt.Sprintf("/api/%s/scenes/%s", connection.Username, id)
+	path := fmt.Sprintf("/api/%s/scenes/%s", client.Connection.Username, id)
 
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

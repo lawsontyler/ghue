@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"fmt"
 	log "github.com/Sirupsen/logrus"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 type Update Create
@@ -17,7 +18,7 @@ type UpdateResult struct {
 }
 
 // UpdateAPI PUT on /api/rules/<rule_id> to update a rule
-func UpdateAPI(connection *common.Connection, ruleId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
+func UpdateAPI(client *factory.SdkClient, ruleId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(update)
 
 	log.Errorf("JSON: %s", bodyRequest)
@@ -27,7 +28,7 @@ func UpdateAPI(connection *common.Connection, ruleId string, update *Update) (*[
 		return &[]UpdateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "PUT", http.StatusOK, fmt.Sprintf("/api/%s/rules/%s", connection.Username, ruleId), bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "PUT", http.StatusOK, fmt.Sprintf("/api/%s/rules/%s", client.Connection.Username, ruleId), bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting PUT on /api/groups/%s (delete a group), HUE Error: %s", ruleId, errHUE.Error.Description)

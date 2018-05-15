@@ -9,6 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // Group struct
@@ -27,11 +28,11 @@ type Group struct {
 }
 
 // GetAllGroups GET on /api/<username>/groups
-func GetAllGroups(connection *common.Connection) (map[string]*Group, *common.ErrorHUE, error) {
+func GetAllGroups(client *factory.SdkClient) (map[string]*Group, *common.ErrorHUE, error) {
 	groups := map[string]*Group{}
-	path := fmt.Sprintf("/api/%s/groups", connection.Username)
+	path := fmt.Sprintf("/api/%s/groups", client.Connection.Username)
 
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)

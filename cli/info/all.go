@@ -8,6 +8,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/info"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdInfoTimezones = &cobra.Command{
@@ -20,7 +21,8 @@ var cmdInfoTimezones = &cobra.Command{
 }
 
 func allTimezonesCmd(connection *common.Connection) {
-	result, errHUE, err := info.GetAllTimezones(connection)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := info.GetAllTimezones(client)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

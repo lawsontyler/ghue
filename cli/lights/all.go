@@ -8,6 +8,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/lights"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdLightsAll = &cobra.Command{
@@ -20,7 +21,8 @@ var cmdLightsAll = &cobra.Command{
 }
 
 func allCmd(connection *common.Connection) {
-	result, errHUE, err := lights.GetAllLights(connection)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := lights.GetAllLights(client)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

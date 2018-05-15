@@ -9,13 +9,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // GetAllTimezones GET on /api/<username>/info/timezones
-func GetAllTimezones(connection *common.Connection) ([]string, *common.ErrorHUE, error) {
+func GetAllTimezones(client *factory.SdkClient) ([]string, *common.ErrorHUE, error) {
 	timezones := []string{}
-	path := fmt.Sprintf("/api/" + connection.Username + "/info/timezones")
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/" + client.Connection.Username + "/info/timezones")
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return timezones, errHUE, err

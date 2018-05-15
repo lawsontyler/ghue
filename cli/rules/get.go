@@ -10,6 +10,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/rules"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdRulesGet = &cobra.Command{
@@ -27,7 +28,8 @@ var cmdRulesGet = &cobra.Command{
 }
 
 func getCmd(connection *common.Connection, id string) {
-	result, errHUE, err := rules.GetRule(connection, id)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := rules.GetRule(client, id)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

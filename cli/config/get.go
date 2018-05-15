@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/config"
+	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdConfigGet = &cobra.Command{
@@ -14,13 +16,14 @@ var cmdConfigGet = &cobra.Command{
 	Long:    `Get configuration: ghue configuration get`,
 	Aliases: []string{"show"},
 	Run: func(cmd *cobra.Command, args []string) {
-		getCmd()
+		getCmd(ReadConfig())
 	},
 }
 
-func getCmd() {
-	connection := ReadConfig()
-	result, errHUE, err := config.Get(connection)
+func getCmd(connection *common.Connection) {
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := config.Get(client)
+
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")

@@ -9,6 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 // Config struct
@@ -68,10 +69,10 @@ type Whitelisted struct {
 
 // Get GET on /api/<username>/config
 // see http://www.developers.meethue.com/documentation/configuration-api#72_get_configuration
-func Get(connection *common.Connection) (*Config, *common.ErrorHUE, error) {
+func Get(client *factory.SdkClient) (*Config, *common.ErrorHUE, error) {
 	var config Config
-	path := fmt.Sprintf("/api/" + connection.Username + "/config")
-	bodyResponse, errHUE, err := internal.Request(connection, "GET", http.StatusOK, path, nil)
+	path := fmt.Sprintf("/api/" + client.Connection.Username + "/config")
+	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
 	if errHUE != nil {
 		log.Errorf("HUE Error: %s", errHUE.Error.Description)
 		return &config, errHUE, err

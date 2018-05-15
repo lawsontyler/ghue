@@ -7,6 +7,7 @@ import (
 	"net/http"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 
@@ -22,7 +23,7 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	log.Errorf("JSON: %s", bodyRequest)
@@ -32,7 +33,7 @@ func CreateAPI(connection *common.Connection, create *Create) (*CreateResult, *c
 		return &CreateResult{}, nil, err
 	}
 
-	bodyResponse, errHUE, err := internal.Request(connection, "POST", http.StatusOK, fmt.Sprintf("/api/%s/rules", connection.Username), bodyRequest)
+	bodyResponse, errHUE, err := internal.Request(client, "POST", http.StatusOK, fmt.Sprintf("/api/%s/rules", client.Connection.Username), bodyRequest)
 
 	if errHUE != nil {
 		log.Errorf("Error with requesting POST on /api/rules (create a new rule), HUE Error: %s", errHUE.Error.Description)

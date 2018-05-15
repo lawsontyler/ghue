@@ -10,6 +10,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/scenes"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
 var cmdScenesGet = &cobra.Command{
@@ -27,7 +28,8 @@ var cmdScenesGet = &cobra.Command{
 }
 
 func getCmd(connection *common.Connection, id string) {
-	result, errHUE, err := scenes.GetScene(connection, id)
+	client := factory.GetSdkClient(connection)
+	result, errHUE, err := scenes.GetScene(client, id)
 	internal.CheckErrors(err, errHUE)
 
 	jsonStr, err := json.MarshalIndent(result, "", "  ")
