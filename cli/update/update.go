@@ -9,6 +9,7 @@ import (
 	"github.com/inconshreveable/go-update"
 	"github.com/spf13/cobra"
 	"github.com/lawsontyler/ghue/cli/internal"
+	"context"
 )
 
 // used by CI to inject architecture (linux-amd64, etc...) at build time
@@ -28,7 +29,7 @@ var Cmd = &cobra.Command{
 
 func getURLArtifactFromGithub(architecture string) string {
 	client := github.NewClient(nil)
-	release, resp, err := client.Repositories.GetLatestRelease("yesnault", "ghue")
+	release, resp, err := client.Repositories.GetLatestRelease(context.Background(), "lawsontyler", "ghue")
 	if err != nil {
 		internal.Exit("Repositories.GetLatestRelease returned error: %v\n%v", err, resp.Body)
 		os.Exit(1)

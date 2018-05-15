@@ -8,9 +8,9 @@ import (
 	"path"
 
 	"github.com/spf13/cobra"
-	"../internal"
-	"../../sdk/common"
-	"../../sdk/config"
+	"github.com/lawsontyler/ghue/cli/internal"
+	"github.com/lawsontyler/ghue/sdk/common"
+	"github.com/lawsontyler/ghue/sdk/config"
 )
 
 var (

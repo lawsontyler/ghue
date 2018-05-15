@@ -8,7 +8,6 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/groups"
 	"github.com/lawsontyler/ghue/cli/info"
-	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/cli/lights"
 	"github.com/lawsontyler/ghue/cli/rules"
 	"github.com/lawsontyler/ghue/cli/scenes"
@@ -16,6 +15,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/sensors"
 	"github.com/lawsontyler/ghue/cli/update"
 	"github.com/lawsontyler/ghue/cli/version"
+	"github.com/lawsontyler/ghue/cli/utils"
 )
 
 var rootCmd = &cobra.Command{
@@ -25,10 +25,18 @@ var rootCmd = &cobra.Command{
 }
 
 func main() {
+
+	verbose := false
+	format := ""
+	home := utils.GetHomeDir()
+
 	addCommands()
-	rootCmd.PersistentFlags().BoolVarP(&internal.Verbose, "verbose", "v", false, "verbose output")
-	rootCmd.PersistentFlags().StringVarP(&internal.Format, "format", "f", "pretty", "choose format output. One of 'json', 'yaml' and 'pretty'")
-	rootCmd.PersistentFlags().StringVarP(&config.ConfigFile, "configFile", "c", internal.Home+"/.ghue/config.json", "configuration file, default is "+internal.Home+"/.ghue/config.json")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
+	rootCmd.PersistentFlags().StringVarP(&format, "format", "f", "pretty", "choose format output. One of 'json', 'yaml' and 'pretty'")
+	rootCmd.PersistentFlags().StringVarP(&config.ConfigFile, "configFile", "c", home + "/.ghue/config.json", "configuration file, default is " + home + "/.ghue/config.json")
+
+	utils.SetVerbose(verbose)
+	utils.SetOutputFormat(format)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
