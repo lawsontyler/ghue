@@ -9,7 +9,6 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/scenes"
-	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
@@ -22,13 +21,12 @@ var cmdScenesGet = &cobra.Command{
 		if len(args) != 1 {
 			fmt.Fprintln(os.Stderr, "Invalid usage. Please see ./ghue scenes state --help")
 		} else {
-			getCmd(config.ReadConfig(), args[0])
+			getCmd(factory.GetSdkClient(config.ReadConfig()), args[0])
 		}
 	},
 }
 
-func getCmd(connection *common.Connection, id string) {
-	client := factory.GetSdkClient(connection)
+func getCmd(client *factory.SdkClient, id string) {
 	result, errHUE, err := scenes.GetScene(client, id)
 	internal.CheckErrors(err, errHUE)
 

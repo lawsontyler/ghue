@@ -40,12 +40,11 @@ var cmdConfigRegister = &cobra.Command{
 			Host:    ip,
 			Verbose: internal.Verbose,
 		}
-		createCmd(connection)
+		createCmd(factory.GetSdkClient(connection))
 	},
 }
 
-func createCmd(connection *common.Connection) {
-	client := factory.GetSdkClient(connection)
+func createCmd(client *factory.SdkClient) {
 
 	create := &config.Create{
 		DeviceType: "ghue" + common.VERSION,
@@ -59,7 +58,7 @@ func createCmd(connection *common.Connection) {
 
 	if save {
 		ghueFile := &GHUEFile{
-			Host:     connection.Host,
+			Host:     client.Connection.Host,
 			Username: createResult.Success.Username,
 			Version:  common.VERSION,
 		}

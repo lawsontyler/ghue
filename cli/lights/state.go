@@ -9,7 +9,6 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/lights"
-	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/factory"
 )
 
@@ -85,12 +84,12 @@ var cmdLightsState = &cobra.Command{
 		if len(args) != 1 {
 			fmt.Fprintln(os.Stderr, "Invalid usage. Please see ./ghue lights state --help")
 		} else {
-			stateCmd(config.ReadConfig(), args[0])
+			stateCmd(factory.GetSdkClient(config.ReadConfig()), args[0])
 		}
 	},
 }
 
-func stateCmd(connection *common.Connection, id string) {
+func stateCmd(client *factory.SdkClient, id string) {
 	setState := &lights.SetStateValues{
 		On:             on,
 		Alert:          alert,
@@ -107,7 +106,7 @@ func stateCmd(connection *common.Connection, id string) {
 		CtInc:          ctInc,
 		XYInc:          xyInc,
 	}
-	client := factory.GetSdkClient(connection)
+
 	result, errHUE, err := lights.SetState(client, id, setState)
 	internal.CheckErrors(err, errHUE)
 
