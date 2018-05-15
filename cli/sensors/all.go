@@ -7,6 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/sensors"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 var cmdSensorsAll = &cobra.Command{
@@ -14,12 +15,11 @@ var cmdSensorsAll = &cobra.Command{
 	Short: "Get All sensors: ghue sensors all",
 	Long:  `Get all sensors: ghue sensors all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd()
+		allCmd(config.ReadConfig())
 	},
 }
 
-func allCmd() {
-	connection := config.ReadConfig()
+func allCmd(connection *common.Connection) {
 	result, errHUE, err := sensors.GetAllSensors(connection)
 	internal.CheckErrors(err, errHUE)
 

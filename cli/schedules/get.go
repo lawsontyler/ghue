@@ -9,6 +9,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/schedules"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 var cmdSchedulesGet = &cobra.Command{
@@ -20,13 +21,12 @@ var cmdSchedulesGet = &cobra.Command{
 		if len(args) != 1 {
 			fmt.Fprintln(os.Stderr, "Invalid usage. Please see ./ghue schedules state --help")
 		} else {
-			getCmd(args[0])
+			getCmd(config.ReadConfig(), args[0])
 		}
 	},
 }
 
-func getCmd(id string) {
-	connection := config.ReadConfig()
+func getCmd(connection *common.Connection, id string) {
 	result, errHUE, err := schedules.GetSchedule(connection, id)
 	internal.CheckErrors(err, errHUE)
 

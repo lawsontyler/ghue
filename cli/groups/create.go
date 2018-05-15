@@ -8,6 +8,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/groups"
 	"strconv"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 var (
@@ -31,13 +32,11 @@ var cmdGroupsCreate = &cobra.Command{
 	Long:  `Create group: ghue groups create ...`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		createGroupCmd()
+		createGroupCmd(config.ReadConfig())
 	},
 }
 
-func createGroupCmd() {
-	connection := config.ReadConfig()
-
+func createGroupCmd(connection *common.Connection) {
 	// I'm intentionally getting this as ints off the command line
 	// I figure, why not let Cobra take care of the validation?  Converting it to strings is easy.
 

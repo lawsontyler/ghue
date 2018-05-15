@@ -1,4 +1,4 @@
 package common
 
 // VERSION of ghue
-const VERSION = "0.1.1"
+const VERSION = "0.2.0"

@@ -7,6 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/rules"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 var cmdRulesAll = &cobra.Command{
@@ -14,12 +15,11 @@ var cmdRulesAll = &cobra.Command{
 	Short: "Get All rules: ghue rules all",
 	Long:  `Get all rules: ghue rules all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd()
+		allCmd(config.ReadConfig())
 	},
 }
 
-func allCmd() {
-	connection := config.ReadConfig()
+func allCmd(connection *common.Connection) {
 	result, errHUE, err := rules.GetAllRules(connection)
 	internal.CheckErrors(err, errHUE)
 

@@ -7,6 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/schedules"
+	"github.com/lawsontyler/ghue/sdk/common"
 )
 
 var cmdSchedulesAll = &cobra.Command{
@@ -14,12 +15,11 @@ var cmdSchedulesAll = &cobra.Command{
 	Short: "Get All schedules: ghue schedules all",
 	Long:  `Get all schedules: ghue schedules all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd()
+		allCmd(config.ReadConfig())
 	},
 }
 
-func allCmd() {
-	connection := config.ReadConfig()
+func allCmd(connection *common.Connection) {
 	result, errHUE, err := schedules.GetAllSchedules(connection)
 	internal.CheckErrors(err, errHUE)
 
