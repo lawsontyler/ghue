@@ -5,6 +5,7 @@ import "github.com/spf13/cobra"
 func init() {
 	Cmd.AddCommand(cmdGroupsAll)
 	Cmd.AddCommand(cmdGroupsGet)
+	Cmd.AddCommand(cmdGroupsCreate)
 }
 
 // Cmd groups
