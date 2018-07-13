@@ -9,7 +9,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/lights"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // TODO Add All arguments from http://www.developers.meethue.com/documentation/lights-api#15_set_light_attributes_rename
@@ -84,12 +84,12 @@ var cmdLightsState = &cobra.Command{
 		if len(args) != 1 {
 			fmt.Fprintln(os.Stderr, "Invalid usage. Please see ./ghue lights state --help")
 		} else {
-			stateCmd(factory.GetSdkClient(config.ReadConfig()), args[0])
+			stateCmd(sdk_client.GetSdkClient(config.ReadConfig()), args[0])
 		}
 	},
 }
 
-func stateCmd(client *factory.SdkClient, id string) {
+func stateCmd(client *sdk_client.SdkClient, id string) {
 	setState := &lights.SetStateValues{
 		On:             on,
 		Alert:          alert,

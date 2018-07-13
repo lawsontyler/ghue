@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // Config struct
@@ -69,7 +69,7 @@ type Whitelisted struct {
 
 // Get GET on /api/<username>/config
 // see http://www.developers.meethue.com/documentation/configuration-api#72_get_configuration
-func Get(client *factory.SdkClient) (*Config, *common.ErrorHUE, error) {
+func Get(client *sdk_client.SdkClient) (*Config, *common.ErrorHUE, error) {
 	var config Config
 	path := fmt.Sprintf("/api/" + client.Connection.Username + "/config")
 	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)

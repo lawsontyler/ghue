@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // Sensor struct
@@ -33,7 +33,7 @@ type Sensor struct {
 }
 
 // GetAllSensors GET on /api/<username>/sensors
-func GetAllSensors(client *factory.SdkClient) (map[string]*Sensor, *common.ErrorHUE, error) {
+func GetAllSensors(client *sdk_client.SdkClient) (map[string]*Sensor, *common.ErrorHUE, error) {
 	sensors := map[string]*Sensor{}
 	path := fmt.Sprintf("/api/%s/sensors", client.Connection.Username)
 

@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/internal"
 	"net/http"
 	"fmt"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type Create struct {
@@ -22,7 +22,7 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-func CreateApi(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateApi(client *sdk_client.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	if err != nil {

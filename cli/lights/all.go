@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/lights"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 var cmdLightsAll = &cobra.Command{
@@ -15,11 +15,11 @@ var cmdLightsAll = &cobra.Command{
 	Short: "Get All lights: ghue lights all",
 	Long:  `Get all lights: ghue lights all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd(factory.GetSdkClient(config.ReadConfig()))
+		allCmd(sdk_client.GetSdkClient(config.ReadConfig()))
 	},
 }
 
-func allCmd(client *factory.SdkClient) {
+func allCmd(client *sdk_client.SdkClient) {
 	result, errHUE, err := lights.GetAllLights(client)
 	internal.CheckErrors(err, errHUE)
 

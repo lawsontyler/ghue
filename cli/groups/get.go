@@ -9,7 +9,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/groups"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 var cmdGroupsGet = &cobra.Command{
@@ -21,12 +21,12 @@ var cmdGroupsGet = &cobra.Command{
 		if len(args) != 1 {
 			fmt.Fprintln(os.Stderr, "Invalid usage. Please see ./ghue groups state --help")
 		} else {
-			getCmd(factory.GetSdkClient(config.ReadConfig()), args[0])
+			getCmd(sdk_client.GetSdkClient(config.ReadConfig()), args[0])
 		}
 	},
 }
 
-func getCmd(client *factory.SdkClient, id string) {
+func getCmd(client *sdk_client.SdkClient, id string) {
 	result, errHUE, err := groups.GetGroup(client, id)
 	internal.CheckErrors(err, errHUE)
 

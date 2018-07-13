@@ -9,11 +9,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // GetGroup GET on /api/<username>/groups/<id>
-func GetGroup(client *factory.SdkClient, id string) (*Group, *common.ErrorHUE, error) {
+func GetGroup(client *sdk_client.SdkClient, id string) (*Group, *common.ErrorHUE, error) {
 	group := &Group{}
 	path := fmt.Sprintf("/api/%s/groups/%s", client.Connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)

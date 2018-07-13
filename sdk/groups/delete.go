@@ -8,14 +8,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 
 	"encoding/json"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type DeleteResult struct {
 	Success string `json:"success"`
 }
 
-func DeleteAPI(client *factory.SdkClient, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
+func DeleteAPI(client *sdk_client.SdkClient, groupId string) (*[]DeleteResult, *common.ErrorHUE, error) {
 	bodyResponse, errHUE, err := internal.Request(client, "DELETE", http.StatusOK, fmt.Sprintf("/api/%s/groups/%s", client.Connection.Username, groupId), nil)
 
 	if errHUE != nil {

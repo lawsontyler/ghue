@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/common"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type Update struct {
@@ -21,7 +21,7 @@ type UpdateResult struct {
 }
 
 // UpdateAPI PUT on /api/groups/<group_id> to update a group
-func UpdateAPI(client *factory.SdkClient, groupId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
+func UpdateAPI(client *sdk_client.SdkClient, groupId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(update)
 
 	if err != nil {

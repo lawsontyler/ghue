@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"fmt"
 	log "github.com/Sirupsen/logrus"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type Update Create
@@ -18,7 +18,7 @@ type UpdateResult struct {
 }
 
 // UpdateAPI PUT on /api/rules/<rule_id> to update a rule
-func UpdateAPI(client *factory.SdkClient, ruleId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
+func UpdateAPI(client *sdk_client.SdkClient, ruleId string, update *Update) (*[]UpdateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(update)
 
 	log.Errorf("JSON: %s", bodyRequest)

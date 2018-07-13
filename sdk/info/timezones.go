@@ -9,11 +9,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // GetAllTimezones GET on /api/<username>/info/timezones
-func GetAllTimezones(client *factory.SdkClient) ([]string, *common.ErrorHUE, error) {
+func GetAllTimezones(client *sdk_client.SdkClient) ([]string, *common.ErrorHUE, error) {
 	timezones := []string{}
 	path := fmt.Sprintf("/api/" + client.Connection.Username + "/info/timezones")
 	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)

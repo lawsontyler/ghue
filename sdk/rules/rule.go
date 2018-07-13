@@ -9,11 +9,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // GetRule GET on /api/<username>/rules/<id>
-func GetRule(client *factory.SdkClient, id string) (*Rule, *common.ErrorHUE, error) {
+func GetRule(client *sdk_client.SdkClient, id string) (*Rule, *common.ErrorHUE, error) {
 	rule := &Rule{}
 	path := fmt.Sprintf("/api/%s/rules/%s", client.Connection.Username, id)
 

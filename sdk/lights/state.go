@@ -11,7 +11,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // State of a light
@@ -47,7 +47,7 @@ type SetStateValues struct {
 }
 
 // SetState PUT on /api/<username>/lights/<idLight>
-func SetState(client *factory.SdkClient, id string, setState *SetStateValues) ([]interface{}, *common.ErrorHUE, error) {
+func SetState(client *sdk_client.SdkClient, id string, setState *SetStateValues) ([]interface{}, *common.ErrorHUE, error) {
 
 	var ret []interface{}
 	requestBody := make(map[string]interface{})

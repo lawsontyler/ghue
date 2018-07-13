@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // Schedule struct
@@ -31,7 +31,7 @@ type Schedule struct {
 }
 
 // GetAllSchedules GET on /api/<username>/schedules
-func GetAllSchedules(client *factory.SdkClient) (map[string]*Schedule, *common.ErrorHUE, error) {
+func GetAllSchedules(client *sdk_client.SdkClient) (map[string]*Schedule, *common.ErrorHUE, error) {
 	schedules := map[string]*Schedule{}
 	path := fmt.Sprintf("/api/%s/schedules", client.Connection.Username)
 	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)

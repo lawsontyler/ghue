@@ -9,7 +9,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 func initRequest(req *http.Request) {
@@ -17,13 +17,9 @@ func initRequest(req *http.Request) {
 	req.Header.Set("Connection", "close")
 }
 
-func getHTTPClient() *http.Client {
-	return &http.Client{Transport: &http.Transport{}}
-}
-
 // Request executes a request of method (POST, PUT, DELETE) on path, checks
 // if return HTTP Code is equals to wantCode
-func Request(client *factory.SdkClient, method string, wantCode int, path string, jsonStr []byte) ([]byte, *common.ErrorHUE, error) {
+func Request(client *sdk_client.SdkClient, method string, wantCode int, path string, jsonStr []byte) ([]byte, *common.ErrorHUE, error) {
 
 	var req *http.Request
 
@@ -35,7 +31,7 @@ func Request(client *factory.SdkClient, method string, wantCode int, path string
 	}
 
 	initRequest(req)
-	resp, err := getHTTPClient().Do(req)
+	resp, err := client.Client.Do(req)
 	if err != nil {
 		return nil, nil, err
 	}

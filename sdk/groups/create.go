@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/sdk/common"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type Create struct {
@@ -24,7 +24,7 @@ type CreateResult struct {
 }
 
 // CreateAPI POST on /api/groups to create a new group
-func CreateAPI(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(client *sdk_client.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	if err != nil {

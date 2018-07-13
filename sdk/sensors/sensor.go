@@ -9,11 +9,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // GetSensor GET on /api/<username>/sensors/<id>
-func GetSensor(client *factory.SdkClient, id string) (*Sensor, *common.ErrorHUE, error) {
+func GetSensor(client *sdk_client.SdkClient, id string) (*Sensor, *common.ErrorHUE, error) {
 	sensor := &Sensor{}
 	path := fmt.Sprintf("/api/%s/sensors/%s", client.Connection.Username, id)
 	bodyResponse, errHUE, err := internal.Request(client, "GET", http.StatusOK, path, nil)
@@ -34,7 +34,7 @@ func GetSensor(client *factory.SdkClient, id string) (*Sensor, *common.ErrorHUE,
 	return sensor, nil, nil
 }
 
-func GetSensorIdByName(client *factory.SdkClient, name string) (string, *common.ErrorHUE, error) {
+func GetSensorIdByName(client *sdk_client.SdkClient, name string) (string, *common.ErrorHUE, error) {
 	var sensorId string
 
 	sensors, _, _ := GetAllSensors(client)

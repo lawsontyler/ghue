@@ -1,4 +1,4 @@
-package factory
+package sdk_client
 
 import (
 	"net/http"
@@ -7,14 +7,12 @@ import (
 
 type SdkClient struct {
 	Connection *common.Connection
-	Client *http.Client
+	Client HttpClient
 }
 
 func GetSdkClient(connection *common.Connection) *SdkClient {
-	httpClient := &http.Client{}
-
 	client := &SdkClient{
-		Client: httpClient,
+		Client: &http.Client{ Transport: &http.Transport{} },
 	}
 
 	if connection != nil {
@@ -23,3 +21,4 @@ func GetSdkClient(connection *common.Connection) *SdkClient {
 
 	return client
 }
+

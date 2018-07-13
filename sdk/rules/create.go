@@ -7,7 +7,7 @@ import (
 	"net/http"
 	log "github.com/Sirupsen/logrus"
 	"fmt"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 
@@ -23,7 +23,7 @@ type CreateResult struct {
 	} `json:"success"`
 }
 
-func CreateAPI(client *factory.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
+func CreateAPI(client *sdk_client.SdkClient, create *Create) (*CreateResult, *common.ErrorHUE, error) {
 	bodyRequest, err := json.Marshal(create)
 
 	log.Errorf("JSON: %s", bodyRequest)

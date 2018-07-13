@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/scenes"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 var cmdScenesAll = &cobra.Command{
@@ -15,11 +15,11 @@ var cmdScenesAll = &cobra.Command{
 	Short: "Get All scenes: ghue scenes all",
 	Long:  `Get all scenes: ghue scenes all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd(factory.GetSdkClient(config.ReadConfig()))
+		allCmd(sdk_client.GetSdkClient(config.ReadConfig()))
 	},
 }
 
-func allCmd(client *factory.SdkClient) {
+func allCmd(client *sdk_client.SdkClient) {
 	result, errHUE, err := scenes.GetAllScenes(client)
 	internal.CheckErrors(err, errHUE)
 

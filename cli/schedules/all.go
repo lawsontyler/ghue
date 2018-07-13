@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/schedules"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 var cmdSchedulesAll = &cobra.Command{
@@ -15,11 +15,11 @@ var cmdSchedulesAll = &cobra.Command{
 	Short: "Get All schedules: ghue schedules all",
 	Long:  `Get all schedules: ghue schedules all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd(factory.GetSdkClient(config.ReadConfig()))
+		allCmd(sdk_client.GetSdkClient(config.ReadConfig()))
 	},
 }
 
-func allCmd(client *factory.SdkClient) {
+func allCmd(client *sdk_client.SdkClient) {
 	result, errHUE, err := schedules.GetAllSchedules(client)
 	internal.CheckErrors(err, errHUE)
 

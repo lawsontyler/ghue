@@ -7,7 +7,7 @@ import (
 	"github.com/lawsontyler/ghue/cli/config"
 	"github.com/lawsontyler/ghue/cli/internal"
 	"github.com/lawsontyler/ghue/sdk/groups"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 var cmdGroupsAll = &cobra.Command{
@@ -15,11 +15,11 @@ var cmdGroupsAll = &cobra.Command{
 	Short: "Get All groups: ghue groups all",
 	Long:  `Get all groups: ghue groups all`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allCmd(factory.GetSdkClient(config.ReadConfig()))
+		allCmd(sdk_client.GetSdkClient(config.ReadConfig()))
 	},
 }
 
-func allCmd(client *factory.SdkClient) {
+func allCmd(client *sdk_client.SdkClient) {
 	result, errHUE, err := groups.GetAllGroups(client)
 	internal.CheckErrors(err, errHUE)
 

@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type LightState struct {
@@ -38,7 +38,7 @@ type Scene struct {
 }
 
 // GetAllScenes GET on /api/<username>/scenes
-func GetAllScenes(client *factory.SdkClient) (map[string]*Scene, *common.ErrorHUE, error) {
+func GetAllScenes(client *sdk_client.SdkClient) (map[string]*Scene, *common.ErrorHUE, error) {
 	scenes := map[string]*Scene{}
 	path := fmt.Sprintf("/api/%s/scenes", client.Connection.Username)
 

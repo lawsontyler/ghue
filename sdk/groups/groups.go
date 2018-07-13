@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // Group struct
@@ -28,7 +28,7 @@ type Group struct {
 }
 
 // GetAllGroups GET on /api/<username>/groups
-func GetAllGroups(client *factory.SdkClient) (map[string]*Group, *common.ErrorHUE, error) {
+func GetAllGroups(client *sdk_client.SdkClient) (map[string]*Group, *common.ErrorHUE, error) {
 	groups := map[string]*Group{}
 	path := fmt.Sprintf("/api/%s/groups", client.Connection.Username)
 

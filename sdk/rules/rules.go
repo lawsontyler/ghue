@@ -9,7 +9,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 type Condition struct {
@@ -55,7 +55,7 @@ type Rule struct {
 }
 
 // GetAllRules GET on /api/<username>/rules
-func GetAllRules(client *factory.SdkClient) (map[string]*Rule, *common.ErrorHUE, error) {
+func GetAllRules(client *sdk_client.SdkClient) (map[string]*Rule, *common.ErrorHUE, error) {
 	rules := map[string]*Rule{}
 	path := fmt.Sprintf("/api/%s/rules", client.Connection.Username)
 

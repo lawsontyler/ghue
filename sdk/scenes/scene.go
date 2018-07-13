@@ -9,11 +9,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
 	"github.com/lawsontyler/ghue/sdk/internal"
-	"github.com/lawsontyler/ghue/sdk/factory"
+	"github.com/lawsontyler/ghue/sdk/sdk_client"
 )
 
 // GetScene GET on /api/<username>/scenes/<id>
-func GetScene(client *factory.SdkClient, id string) (*Scene, *common.ErrorHUE, error) {
+func GetScene(client *sdk_client.SdkClient, id string) (*Scene, *common.ErrorHUE, error) {
 	scene := &Scene{}
 	path := fmt.Sprintf("/api/%s/scenes/%s", client.Connection.Username, id)
 
