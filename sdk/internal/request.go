@@ -9,6 +9,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/lawsontyler/ghue/sdk/common"
+	"time"
 )
 
 func initRequest(req *http.Request) {
@@ -25,19 +26,34 @@ func getHTTPClient() *http.Client {
 func Request(connection *common.Connection, method string, wantCode int, path string, jsonStr []byte) ([]byte, *common.ErrorHUE, error) {
 
 	var req *http.Request
-
+	var retries = 5
+	var current int
+	var resp *http.Response
+	var err error = nil
 	fullURL := fmt.Sprintf("http://%s%s", connection.Host, path)
-	if jsonStr != nil {
-		req, _ = http.NewRequest(method, fullURL, bytes.NewReader(jsonStr))
-	} else {
-		req, _ = http.NewRequest(method, fullURL, nil)
+
+	for current = 1; current < retries; current++ {
+		if jsonStr != nil {
+			req, _ = http.NewRequest(method, fullURL, bytes.NewReader(jsonStr))
+		} else {
+			req, _ = http.NewRequest(method, fullURL, nil)
+		}
+
+		initRequest(req)
+		resp, err = getHTTPClient().Do(req)
+		if err != nil {
+			// resp.Body.Close()
+			time.Sleep(time.Millisecond * 300)
+			continue
+		}
+
+		break
 	}
 
-	initRequest(req)
-	resp, err := getHTTPClient().Do(req)
-	if err != nil {
+	if current == retries {
 		return nil, nil, err
 	}
+
 	defer resp.Body.Close()
 
 	var errors []common.ErrorHUE
@@ -49,7 +65,7 @@ func Request(connection *common.Connection, method string, wantCode int, path st
 	}
 
 	if resp.StatusCode != wantCode || connection.Verbose || inError {
-		//log.Errorf("Response Status: %s and we want %d", resp.Status, wantCode)
+		log.Errorf("Response Status: %d and we want %d", resp.StatusCode, wantCode)
 		log.Errorf("In HUE Error:%t", inError)
 		log.Errorf("HUE Error:%+v", errors)
 		log.Errorf("Request path: %s on %s", method, fullURL)
@@ -59,7 +75,7 @@ func Request(connection *common.Connection, method string, wantCode int, path st
 	}
 
 	if inError {
-		return body, &errors[0], nil
+		return body, &errors[0], err
 	}
 
 	return body, nil, nil
